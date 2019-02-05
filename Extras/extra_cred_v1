@@ -1,0 +1,86 @@
+# # Outline MVP
+# output a text file named teams.txt
+# Create 3 teams: Sharks, Dragons and Raptors
+# split the teams by experience
+#   count the number of experienced with yes
+#   assign them to teams first evenly
+#   then assign the rest to the teams
+# Extra credit
+# Create 18 files
+#   name files by player with underscore btw first and last name using replace
+#     
+#
+#=========================================
+
+import csv
+
+# Player assigner function
+# Purpose: Split team's evenly into 3 groups
+# Code Learnings:
+# - looping with for loop:
+# .copy() is necessary for loops in order to ensure the 
+# loop doesn't behave weirdly and skip indexes when 
+# values are removed.
+# .pop() the iterated array's COPY
+def pl_assigner(file, team, pl_list):
+    pl_list_pop=[]
+    pl_list_npop=[]
+    pl_list_safe=[]
+    # This list is a temp list
+    pl_list_temp = pl_list.copy()
+    count_exp = 0
+    count_non_exp = 0
+    file.write(team + '\n')
+    for pl in pl_list:
+        # Array counter
+        if pl["Soccer Experience"] == "YES":
+            if count_exp <= 2:
+                file.write(pl["Name"] + ", " + pl["Soccer Experience"] + ", " + pl["Guardian Name(s)"] + '\n')
+                pl_list_pop.append(pl_list_temp.pop(0))
+                count_exp += 1
+            else:
+                pl_list_safe.append(pl_list_temp.pop(0))
+        elif pl["Soccer Experience"] == "NO":
+            if count_non_exp <= 2:
+                file.write(pl["Name"] + ", " + pl["Soccer Experience"] + ", " + pl["Guardian Name(s)"] + '\n')
+                pl_list_npop.append(pl_list_temp.pop(0))
+                count_non_exp += 1
+            else:
+                # List of players that are not yet assigned
+                pl_list_safe.append(pl_list_temp.pop(0))
+    file.write('\n')   
+    return pl_list_safe.copy()
+
+
+def league_builder():
+    # Original test for main
+    # print('hello')
+
+    # Open csv and read it into an Ordered Dict soccer_reader
+    with open('soccerplayers.csv', newline='') as csvfile:
+        soccer_reader = csv.DictReader(csvfile)
+        
+        # initialize pl_list as list
+        pl_list = []
+        
+        # Extract keys and values from the ordered dict 
+        # and create a list of dictionaries
+        for pl in soccer_reader:
+            a = dict(pl.items())
+            pl_list.append(a)
+
+    # Create team of arrays
+    teams = ['Sharks','Dragons', 'Raptors']
+
+    # Create file named team.txt
+    with open('teams.txt', 'w') as file:
+        
+        # loop through arrays 
+        for team in teams:
+            pl_list = pl_assigner(file, team, pl_list)
+
+
+if __name__ == "__main__":
+    # call league builder
+    league_builder()
+    
