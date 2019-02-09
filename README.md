@@ -1,4 +1,4 @@
-Python-SoccerLeague-TTTD02
+#Python-SoccerLeague-TTTD02
 
 Purpose: 
 Program that builds a soccer league by spliting 
