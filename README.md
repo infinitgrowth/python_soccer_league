@@ -1,6 +1,7 @@
 Python-SoccerLeague-TTTD02
 
 Purpose: 
+
 Program that builds a soccer league by spliting 
 18 players into 3 balanced teams of experience and 
 non-experienced players. Generates a teams.txt file
